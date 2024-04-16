@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Basic authentication module for the API.
 """
+import re
 import base64
 import binascii
 from typing import Tuple, TypeVar
@@ -23,7 +24,7 @@ class BasicAuth(Auth):
                 return field_match.group('token')
         return None
 
-   gdef decode_base64_authorization_header(
+    def decode_base64_authorization_header(
             self,
             base64_authorization_header: str,
             ) -> str:
