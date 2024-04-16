@@ -39,6 +39,7 @@ class BasicAuth(Auth):
                 return res.decode('utf-8')
             except (binascii.Error, UnicodeDecodeError):
                 return None
+
     def extract_user_credentials(
             self,
             decoded_base64_authorization_header: str,
@@ -57,3 +58,20 @@ class BasicAuth(Auth):
                 password = field_match.group('password')
                 return user, password
         return None, None
+
+    def user_object_from_credentials(
+            self,
+            user_email: str,
+            user_pwd: str) -> TypeVar('User'):
+        """Retrieves a user based on the user's authentication credentials.
+        """
+        if type(user_email) == str and type(user_pwd) == str:
+            try:
+                users = User.search({'email': user_email})
+            except Exception:
+                return None
+            if len(users) <= 0:
+                return None
+            if users[0].is_valid_password(user_pwd):
+                return users[0]
+        return None
