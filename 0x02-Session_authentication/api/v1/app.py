@@ -55,11 +55,13 @@ def authenticate_user():
         ]
         if auth.require_auth(request.path, excluded_paths):
             auth_header = auth.authorization_header(request)
-            b64_auth_token = auth.extract_base64_authorization_header(auth_header)
-            auth_token = auth.decode_base64_authorization_header(b64_auth_token)
+            b64_auth_token = \
+                auth.extract_base64_authorization_header(auth_header)
+            auth_token = \
+                auth.decode_base64_authorization_header(b64_auth_token)
             email, password = auth.extract_user_credentials(auth_token)
             user = auth.user_object_from_credentials(email, password)
-            #user = auth.current_user(request)
+            # user = auth.current_user(request)
             if auth.authorization_header(request) is None:
                 abort(401)
             if user is None:
