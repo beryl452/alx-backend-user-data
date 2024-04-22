@@ -61,8 +61,7 @@ def authenticate_user():
             user = auth.user_object_from_credentials(email, password)
             #user = auth.current_user(request)
             #print(email, password)
-            if auth.authorization_header(request) is None and \
-                    auth.session_cookie(request) is None:
+            if auth.authorization_header(request) is None:
                 abort(401)
             if user is None:
                 abort(403)
