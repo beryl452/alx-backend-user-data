@@ -35,7 +35,9 @@ def login() -> Tuple[str, int]:
         return res
     return jsonify({"error": "wrong password"}), 401
 
-@app_views.route('/auth_session/logout', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route(
+        '/auth_session/logout', methods=['DELETE'], strict_slashes=False)
 def logout() -> Tuple[str, int]:
     """DELETE /api/v1/auth_session/logout
     Return:
